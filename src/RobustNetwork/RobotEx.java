@@ -21,7 +21,11 @@ go to the project folder
 
 
 
-
+/*
+ADDITIONNAL INFOS 
+on the two un-implemented strategies in case of errors: "server failure" and "robot loses all connections"
+can be found in class SynchWaiter where the two strategy should have been implemented
+*/
 
 
 
