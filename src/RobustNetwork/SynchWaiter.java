@@ -48,7 +48,20 @@ public class SynchWaiter extends Thread{
     
     the second idea is to have the server send a pre-recorded loop to the robots when he can,
     so that they have messages to play in case the server fails
-    those message will be stored in the robots' buffer while the temporary master will do the synch
+    those message will be stored in the robots' buffer while the temporary master will do the synch.
+    
+    It is also possible to choose a temporary master at the beginning of the performance,
+    based of the robot's computing power, connection quality,
+    or maybe just the drummer-bot as a convention based on real life musicians.
+    */
+    
+    /* 
+    if a robot loses connection with the server,
+    => broadcasts and SOS 
+    => receives no responses at all after the fixed delay,
+    ie. no positives ( i can talk with server) but no negatives ( i CAN'T talk with server ) either,
+    then the robot should consider itself offline and cease all musical activities until he receives messages again.
+    
     */
     
     // coordinates of the robot
