@@ -171,7 +171,7 @@ public class RobotEx {
                 args.add(this.robotOsc);
                 args.add(this.receivePort);
                 break;
-        
+                            
             case "test back": // send a simple "test back" message to confirm to the server that the connection works
                 break;
             
@@ -274,10 +274,17 @@ public class RobotEx {
                 }
                 
                 else{
+                    
+                    
                     // filter between the different types of messages
                     switch((String)L.get(2)){
+                            
+                        case "message to R":
+                            buffer.add(message);
+                            break;
                         
-                        case "i can talk with server": // this robot has already sent an Sos and now other robots are responding
+                        case "i can talk with server": 
+// this robot has already sent an Sos and now other robots are responding
                             
                             synchWaiter.sosAnswered = true;
                             // the Sos has been answered, can be used to determine if a robot has lost all connections or only the server
@@ -324,7 +331,6 @@ public class RobotEx {
                             // when a robot loses connection with server, the server will send "test answer" messages to the robot
                             // once the robot receives one of those messages it answers with "test back"
                             RobotSender(server, "test back", null); // answers the server
-                            RobotSender(master, "you are not master anymore", null); //resets the master
                             synchWaiter.connectionServer = true;
                             master = null;
                             synchWaiter.hasMaster = false;
@@ -342,7 +348,7 @@ public class RobotEx {
                             buffer.robotUI.print("This my threshold: " + buffer.threshold + "\n");
                             buffer.robotUI.print("This is the synch interval: " + synchInterval + "\n");
                             
-                            // resets the synch waiter
+                            // restarts the synch waiter
                             synchWaiter = new SynchWaiter(synchInterval, name, robotAddress, robotOsc, receivePort, ipBroad, SosOsc);
                             synchWaiter.lastInstrumentTime = buffer.lastInstrumentTime;
                             synchWaiter.start();
@@ -437,12 +443,18 @@ public class RobotEx {
         
         /*
         the next While loops are used to wait for user inputs
+        though there must be a more efficient way to do this
         */
         Robot.buffer.robotUI.ask("Enter a name for the Robot");
         while (Robot.name.equals("NaN")){
             Robot.name = Robot.buffer.robotUI.inputText;
             // once a user inputs anything different tan "NaN", the name is saved and the while loop exits
             System.out.println(Robot.name);
+            try{
+            Thread.sleep(200);
+            } catch (InterruptedException ex) {
+            Logger.getLogger(RobotEx.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         Robot.buffer.robotUI.inputText = "NaN"; // resets the input value to "NaN" so that the next loop can function
         Robot.buffer.robotUI.print("My name is " + Robot.name + "\n");
@@ -460,6 +472,11 @@ public class RobotEx {
         while (Robot.server.name.equals("NaN")){
             Robot.server.name = Robot.buffer.robotUI.inputText;
             System.out.println(Robot.server.name);
+            try{
+            Thread.sleep(200);
+            } catch (InterruptedException ex) {
+            Logger.getLogger(RobotEx.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         Robot.buffer.robotUI.inputText = "NaN";
         Robot.buffer.robotUI.print("The Server name is " + Robot.server.name + "\n");
@@ -471,6 +488,11 @@ public class RobotEx {
         while (Robot.server.contactAddress.equals("NaN")){
             Robot.server.contactAddress = Robot.buffer.robotUI.inputText;
             System.out.println(Robot.server.contactAddress);
+            try{
+            Thread.sleep(200);
+            } catch (InterruptedException ex) {
+            Logger.getLogger(RobotEx.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         Robot.buffer.robotUI.inputText = "0";
         Robot.buffer.robotUI.print("The Server Ip is " + Robot.server.contactAddress + "\n");        
@@ -480,6 +502,11 @@ public class RobotEx {
         while (Robot.server.receivePort == 0){
             Robot.server.receivePort = Integer.parseInt(Robot.buffer.robotUI.inputText);
             System.out.println(Robot.server.receivePort);
+            try{
+            Thread.sleep(200);
+            } catch (InterruptedException ex) {
+            Logger.getLogger(RobotEx.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         Robot.buffer.robotUI.print("The Server port is " + Robot.server.receivePort + "\n");
         
@@ -494,7 +521,7 @@ public class RobotEx {
         Robot.SosReiceiver();
         // send handshake to server automatically when robot starts
         // need to start server before robots
-        Robot.RobotSender(server, "handshake", null); 
+        Robot.RobotSender(server, "handshake", null);
 
         
         // tests to print the current state of the robot

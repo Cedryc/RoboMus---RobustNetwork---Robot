@@ -91,6 +91,7 @@ public class SynchWaiter extends Thread{
         
         this.sosAnswered = false;
         this.hasMaster = false;
+        this.connectionServer = true;
         
     }
     

@@ -37,7 +37,7 @@ public class BufferEx extends Thread{
 
     }
     
-    public void print(){ // print the content of the buffer; unused function
+    public void print(){ // print the content of the buffer
         int cont = 0;
         
         System.out.println("_________________buffer______________");
@@ -53,7 +53,7 @@ public class BufferEx extends Thread{
         System.out.println("\n");
     }
     
-    public void printLastMessage(){ // print the last message of the buffer, unused function
+    public void printLastMessage(){ // print the last message of the buffer
         int ind = messages.size() - 1;
         
         System.out.println("_________________buffer______________");
@@ -69,15 +69,11 @@ public class BufferEx extends Thread{
         return messages.remove(0);
     }
     
-    public void add(OSCMessage l){ // add 1 message, unused function
-        if(l.getArguments().get(0) == "/sincronizar" ){
-            messages.add(0,l);
-        }else{
-            messages.add(l);
-        }
-        
+    public void add(OSCMessage message){ // add 1 message to the buffer
+        messages.add(message);    
     }
-    public void remove(int n){ // remove a specific message, unused function
+    
+    public void remove(int n){ // remove a specific message
         for (int i = 0; i < n; i++) {
             messages.remove(i);
         }
@@ -137,6 +133,7 @@ public class BufferEx extends Thread{
                     
                     try { // convert the String "color" into a Color object that can be interpreted by the painter
                     Field field = Class.forName("java.awt.Color").getField((String)L.get(4));
+                    robotUI.print("i received " + (String)L.get(4) + "\n");
                     blinker.color = (Color)field.get(null);
                     } catch (ClassNotFoundException | NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                     blinker.color = null; // Not defined
